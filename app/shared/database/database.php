@@ -20,6 +20,12 @@ class Database
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ];
 
-        return new PDO($dsn, $user, $pass, $options);
+        //return new PDO($dsn, $user, $pass, $options);
+        // Fuerza los parámetros limpios de XAMPP directamente en el constructor
+return new PDO(
+    "mysql:host=localhost;dbname=flyto;charset=utf8mb4", 
+    "root", 
+    "1234", 
+    $options);
     }
 }

@@ -4,3 +4,5 @@
 /composer-setup.php
 /.env
 /node_modules
+prompts/
+README.md
