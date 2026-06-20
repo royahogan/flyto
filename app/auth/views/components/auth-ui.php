@@ -14,7 +14,9 @@ if (!function_exists('flytoAuthField')) {
         string $type = 'text',
         string $placeholder = '',
         string $autocomplete = '',
-        string $extraAttributes = ''
+        string $extraAttributes = '',
+        string $value = '',
+        string $error = ''
     ): void {
         ?>
         <label class="block">
@@ -25,9 +27,13 @@ if (!function_exists('flytoAuthField')) {
                 type="<?= htmlspecialchars($type, ENT_QUOTES, 'UTF-8') ?>"
                 class="mt-1 h-[41.6px] w-full border border-flyto-ink/10 bg-white px-3 text-sm text-flyto-ink outline-none placeholder:text-flyto-muted/40 focus:border-flyto-navy"
                 placeholder="<?= htmlspecialchars($placeholder, ENT_QUOTES, 'UTF-8') ?>"
+                <?php if ($type !== 'password' && $value !== ''): ?>value="<?= htmlspecialchars($value, ENT_QUOTES, 'UTF-8') ?>"<?php endif; ?>
                 <?php if ($autocomplete !== ''): ?>autocomplete="<?= htmlspecialchars($autocomplete, ENT_QUOTES, 'UTF-8') ?>"<?php endif; ?>
                 <?= $extraAttributes ?>
             >
+            <?php if ($error !== ''): ?>
+                <p class="mt-1 text-xs leading-5 text-flyto-ink"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
+            <?php endif; ?>
         </label>
         <?php
     }

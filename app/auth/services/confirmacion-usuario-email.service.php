@@ -50,7 +50,7 @@ class ConfirmacionUsuarioEmailService
             throw new HttpException('Falta configurar APP_URL.', 500);
         }
 
-        return rtrim($appUrl, '/') . '/api/auth/confirmar?token=' . rawurlencode($token);
+        return rtrim($appUrl, '/') . '/auth/confirmar?token=' . rawurlencode($token);
     }
 
     private function htmlBody(string $nombre, string $confirmationUrl): string

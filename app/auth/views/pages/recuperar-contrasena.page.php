@@ -14,7 +14,7 @@ flytoAuthShellStart('Recuperaci&oacute;n de cuenta', 'Recuper&aacute; tu contras
     </div>
 
     <div class="mt-7 grid gap-3 sm:grid-cols-2">
-        <a href="<?= flytoAuthUrl($basePath ?? '', '/login') ?>" class="flex h-[45.6px] items-center justify-center gap-2 border border-flyto-ink/10 bg-white px-6 text-sm font-medium text-flyto-ink">
+        <a href="<?= flytoAuthUrl($basePath ?? '', '/auth/login') ?>" class="flex h-[45.6px] items-center justify-center gap-2 border border-flyto-ink/10 bg-white px-6 text-sm font-medium text-flyto-ink">
             <?= flytoBackIcon() ?> Volver
         </a>
         <button type="submit" class="min-h-[45.6px] bg-flyto-navy px-5 py-3 text-sm font-medium leading-5 text-flyto-sand">

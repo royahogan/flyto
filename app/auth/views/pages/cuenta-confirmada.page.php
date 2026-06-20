@@ -2,11 +2,11 @@
 
 require_once __DIR__ . '/../components/auth-ui.php';
 
-$hasError = ($_GET['confirmacion'] ?? '') === 'error';
+$flash = $flash ?? [];
 $homeUrl = flytoAuthUrl($basePath ?? '', '/');
-$loginUrl = flytoAuthUrl($basePath ?? '', '/login');
+$loginUrl = flytoAuthUrl($basePath ?? '', '/auth/login');
 
-if ($hasError) {
+if (!empty($flash['error'])) {
     $actions = '<a href="' . $homeUrl . '" class="flex h-11 items-center justify-center border border-flyto-ink/10 bg-white px-6 text-sm font-medium text-flyto-ink">Ir al inicio</a>';
 
     flytoStatusCard(

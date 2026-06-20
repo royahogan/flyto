@@ -1,21 +1,34 @@
 <?php
 
-$flight = $flight ?? [
-    'origen' => 1,
-    'origen_nombre' => 'Buenos Aires',
-    'destino' => 2,
-    'destino_nombre' => 'Miami',
-    'pasajeros' => '1 adulto',
-];
 $basePath = $basePath ?? '';
-$ciudades = $ciudades ?? (require __DIR__ . '/../../../shared/mocks/ciudades.mock.php');
-$selectedOrigen = (string) ($flight['origen'] ?? 1);
-$selectedDestino = (string) ($flight['destino'] ?? 2);
+$ciudades = $ciudades ?? [];
+$flight = $flight ?? [];
+$selectedOrigen = (string) ($flight['origen'] ?? '');
+$selectedDestino = (string) ($flight['destino'] ?? '');
+$selectedFecha = (string) ($flight['fechaSalida'] ?? '');
+$selectedPasajeros = (string) ($flight['cantidadPasajeros'] ?? '');
+
+$cityDescription = static function (array $ciudades, string $selectedId, string $fallback = ''): string {
+    foreach ($ciudades as $ciudad) {
+        if ((string) $ciudad['id'] === $selectedId) {
+            return sprintf('%s, %s', $ciudad['nombre'], $ciudad['nombrePais']);
+        }
+    }
+
+    return $fallback;
+};
+
+$origenDescripcion = (string) ($flight['origen_nombre'] ?? $cityDescription($ciudades, $selectedOrigen));
+$destinoDescripcion = (string) ($flight['destino_nombre'] ?? $cityDescription($ciudades, $selectedDestino));
 
 $renderCityOptions = static function (array $ciudades, string $selectedId): void {
+    ?>
+    <option value="" <?= $selectedId === '' ? 'selected' : '' ?> disabled>Seleccionar</option>
+    <?php
+
     foreach ($ciudades as $ciudad) {
         $id = (string) $ciudad['id'];
-        $label = sprintf('%s (%s)', $ciudad['nombre'], $ciudad['abreviacion']);
+        $label = sprintf('%s', $ciudad['nombre']);
         $description = sprintf('%s, %s', $ciudad['nombre'], $ciudad['nombrePais']);
         ?>
         <option
@@ -31,13 +44,13 @@ $renderCityOptions = static function (array $ciudades, string $selectedId): void
 
 ?>
 <form id="buscar-vuelos" action="<?= htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8') ?>/vuelos/buscar" method="get" class="bg-white p-6 shadow-flyto">
-    <div class="grid border border-flyto-ink/10 md:grid-cols-[1fr_64px_1fr_1fr]">
+    <div class="grid border border-flyto-ink/10 md:grid-cols-[1fr_56px_1fr_160px_140px]">
         <label class="block border-b border-flyto-ink/10 p-4 md:border-b-0 md:border-r">
             <span class="font-mono text-xs uppercase tracking-[0.3px] text-flyto-muted">Origen</span>
-            <select name="origen" class="mt-1 block w-full bg-transparent font-display text-2xl font-semibold leading-6 text-flyto-ink outline-none" aria-describedby="origen_nombre" data-city-select data-description-target="origen_nombre">
+            <select name="origen" class="mt-1 block w-full bg-transparent font-display text-2xl font-semibold leading-6 text-flyto-ink outline-none" aria-describedby="origen_nombre" data-city-select data-description-target="origen_nombre" required>
                 <?php $renderCityOptions($ciudades, $selectedOrigen); ?>
             </select>
-            <span id="origen_nombre" class="mt-1 block text-xs text-flyto-muted"><?= htmlspecialchars($flight['origen_nombre'], ENT_QUOTES, 'UTF-8') ?></span>
+            <span id="origen_nombre" class="mt-1 block text-xs text-flyto-muted"><?= htmlspecialchars($origenDescripcion, ENT_QUOTES, 'UTF-8') ?></span>
         </label>
 
         <button id="change-destiny-origin" type="button" class="flex h-12 items-center justify-center border-b border-flyto-ink/10 text-flyto-muted hover:text-flyto-navy md:h-auto md:border-b-0 md:border-r" aria-label="Intercambiar origen y destino">
@@ -48,19 +61,32 @@ $renderCityOptions = static function (array $ciudades, string $selectedId): void
 
         <label class="block border-b border-flyto-ink/10 p-4 md:border-b-0 md:border-r">
             <span class="font-mono text-xs uppercase tracking-[0.3px] text-flyto-muted">Destino</span>
-            <select name="destino" class="mt-1 block w-full bg-transparent font-display text-2xl font-semibold leading-6 text-flyto-ink outline-none" aria-describedby="destino_nombre" data-city-select data-description-target="destino_nombre">
+            <select name="destino" class="mt-1 block w-full bg-transparent font-display text-2xl font-semibold leading-6 text-flyto-ink outline-none" aria-describedby="destino_nombre" data-city-select data-description-target="destino_nombre" required>
                 <?php $renderCityOptions($ciudades, $selectedDestino); ?>
             </select>
-            <span id="destino_nombre" class="mt-1 block text-xs text-flyto-muted"><?= htmlspecialchars($flight['destino_nombre'], ENT_QUOTES, 'UTF-8') ?></span>
+            <span id="destino_nombre" class="mt-1 block text-xs text-flyto-muted"><?= htmlspecialchars($destinoDescripcion, ENT_QUOTES, 'UTF-8') ?></span>
+        </label>
+
+        <label class="block border-b border-flyto-ink/10 p-4 md:border-b-0 md:border-r">
+            <span class="font-mono text-xs uppercase tracking-[0.3px] text-flyto-muted">Fecha</span>
+            <input
+                type="date"
+                name="fechaSalida"
+                value="<?= htmlspecialchars($selectedFecha, ENT_QUOTES, 'UTF-8') ?>"
+                class="mt-1 block h-8 w-full bg-transparent text-sm font-medium leading-5 text-flyto-ink outline-none"
+                required
+            >
         </label>
 
         <label class="block p-4">
             <span class="font-mono text-xs uppercase tracking-[0.3px] text-flyto-muted">Pasajeros</span>
-            <select name="pasajeros" class="mt-1 block w-full bg-transparent text-sm font-medium leading-5 text-flyto-ink outline-none">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+            <select name="cantidadPasajeros" class="mt-1 block w-full bg-transparent text-sm font-medium leading-5 text-flyto-ink outline-none" required>
+                <option value="" <?= $selectedPasajeros === '' ? 'selected' : '' ?> disabled>Seleccionar</option>
+                <?php for ($passengers = 1; $passengers <= 4; $passengers++): ?>
+                    <option value="<?= $passengers ?>" <?= (string) $passengers === $selectedPasajeros ? 'selected' : '' ?>>
+                        <?= $passengers ?>
+                    </option>
+                <?php endfor; ?>
             </select>
         </label>
     </div>

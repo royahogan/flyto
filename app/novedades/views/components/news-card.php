@@ -1,7 +1,6 @@
 <?php
 
 $news = $news ?? [];
-$basePath = $basePath ?? '';
 $showNextNewsButton = $showNextNewsButton ?? true;
 $fecha = $news['fechaPublicacion'] ?? '';
 $texto = $news['texto'] ?? '';

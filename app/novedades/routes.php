@@ -2,18 +2,19 @@
 
 namespace App\Novedades;
 
-use App\Novedades\Controllers\NovedadController;
+use App\Novedades\Controllers\BorrarNovedadActionController;
+use App\Novedades\Controllers\CrearNovedadActionController;
+use App\Novedades\Controllers\EditarNovedadActionController;
 
-require_once __DIR__ . '/controllers/novedad.controller.php';
+require_once __DIR__ . '/controllers/crear-novedad-action.controller.php';
+require_once __DIR__ . '/controllers/editar-novedad-action.controller.php';
+require_once __DIR__ . '/controllers/borrar-novedad-action.controller.php';
 
 return [
-    'prefix' => '/api/novedades',
+    'prefix' => '',
     'routes' => [
-        ['GET', '/ultimas', NovedadController::class, 'getUltimas'],
-        ['GET', '/vigentes', NovedadController::class, 'getVigentes'],
-        ['GET', '/todas', NovedadController::class, 'getTodas'],
-        ['POST', '/crear', NovedadController::class, 'crear'],
-        ['POST', '/editar', NovedadController::class, 'editar'],
-        ['POST', '/borrar', NovedadController::class, 'borrar'],
+        ['POST', '/admin/novedades/crear', CrearNovedadActionController::class, 'crear'],
+        ['POST', '/admin/novedades/editar', EditarNovedadActionController::class, 'editar'],
+        ['POST', '/admin/novedades/borrar', BorrarNovedadActionController::class, 'borrar'],
     ],
 ];

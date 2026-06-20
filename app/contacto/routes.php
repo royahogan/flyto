@@ -2,13 +2,13 @@
 
 namespace App\Contacto;
 
-use App\Contacto\Controllers\EnviarMensajeController;
+use App\Contacto\Controllers\EnviarMensajeActionController;
 
-require_once __DIR__ . '/controllers/enviar-mensaje.controller.php';
+require_once __DIR__ . '/controllers/enviar-mensaje-action.controller.php';
 
 return [
-    'prefix' => '/api/contacto',
+    'prefix' => '/contacto',
     'routes' => [
-        ['POST', '/enviar', EnviarMensajeController::class, 'enviar'],
+        ['POST', '/enviar', EnviarMensajeActionController::class, 'enviar'],
     ],
 ];

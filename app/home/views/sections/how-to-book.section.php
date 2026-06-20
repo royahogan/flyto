@@ -1,11 +1,11 @@
 <?php
 
-$steps = [
-    ['numero' => '01', 'titulo' => 'Buscá tu vuelo', 'texto' => 'Ingresá origen, destino, fecha y cantidad de pasajeros.'],
-    ['numero' => '02', 'titulo' => 'Seleccioná la opción', 'texto' => 'Compará tarifas, condiciones y horarios. Filtrá por precio o aerolínea.'],
-    ['numero' => '03', 'titulo' => 'Completá tus datos', 'texto' => 'Ingresá los datos de todos los pasajeros. El proceso es guiado, claro y seguro en cada paso.'],
-    ['numero' => '04', 'titulo' => 'Confirmá el pago', 'texto' => 'Pagá con tarjeta. Recibís la confirmación y el itinerario en tu correo de inmediato.'],
-];
+    $steps = [
+        ['numero' => '01', 'titulo' => 'Buscá tu vuelo', 'texto' => 'Ingresá origen, destino, fecha y cantidad de pasajeros.'],
+        ['numero' => '02', 'titulo' => 'Seleccioná la opción', 'texto' => 'Compará tarifas, condiciones y horarios. Filtrá por precio o aerolínea.'],
+        ['numero' => '03', 'titulo' => 'Completá tus datos', 'texto' => 'Ingresá los datos de todos los pasajeros. El proceso es guiado, claro y seguro en cada paso.'],
+        ['numero' => '04', 'titulo' => 'Confirmá el pago', 'texto' => 'Pagá con tarjeta. Recibís la confirmación y el itinerario en tu correo de inmediato.'],
+    ];
 
 ?>
 <section id="como-reservar" class="bg-flyto-sand py-16" aria-labelledby="como-reservar-title">

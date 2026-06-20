@@ -4,7 +4,7 @@ require_once __DIR__ . '/../components/auth-ui.php';
 
 flytoAuthShellStart('Cambio de contrase&ntilde;a', 'Cre&aacute; tu nueva contrase&ntilde;a');
 ?>
-<form action="<?= flytoAuthUrl($basePath ?? '', '/login') ?>" method="get" class="mt-8 border border-flyto-ink/10 bg-white p-8">
+<form action="<?= flytoAuthUrl($basePath ?? '', '/auth/login') ?>" method="get" class="mt-8 border border-flyto-ink/10 bg-white p-8">
     <input type="hidden" name="login" value="recuperacion-pendiente">
 
     <div class="grid gap-4">

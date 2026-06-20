@@ -1,3 +1,7 @@
+<?php
+    $novedades = $novedades ?? [];
+    $showNextNewsButton = true;
+?>
 <section class="mt-16 border-t border-flyto-ink/10 bg-white py-12 md:mt-28" aria-labelledby="ultimas-novedades">
     <div class="mx-auto max-w-7xl px-6">
         <div class="grid border border-flyto-ink/10 md:grid-cols-[282px_1fr]">
@@ -13,14 +17,13 @@
                 </a>
             </div>
             <div class="p-6 md:p-8" data-news-carousel>
-                <?php if (($ultimasNovedades ?? []) === []): ?>
+                <?php if ($novedades === []): ?>
                     <p class="text-sm leading-[22.75px] text-flyto-muted">No hay novedades vigentes.</p>
                 <?php endif; ?>
-                <?php foreach (($ultimasNovedades ?? []) as $index => $news): ?>
+                <?php foreach ($novedades as $index => $news): ?>
                     <div data-news-slide class="<?= $index === 0 ? '' : 'hidden' ?>">
                         <?php
-                        $showNextNewsButton = true;
-                        require __DIR__ . '/../../../novedades/views/components/news-card.php';
+                            require __DIR__ . '/../../../novedades/views/components/news-card.php';
                         ?>
                     </div>
                 <?php endforeach; ?>

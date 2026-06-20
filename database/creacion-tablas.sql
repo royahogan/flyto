@@ -40,12 +40,15 @@ CREATE TABLE paises (
 CREATE TABLE ciudades (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(80) NOT NULL,
+    abreviacion CHAR(3) NOT NULL,
     pais_id INT NOT NULL,
 
     CONSTRAINT fk_ciudades_pais
         FOREIGN KEY (pais_id) REFERENCES paises(id),
 
-    CONSTRAINT uq_ciudad_pais UNIQUE (nombre, pais_id)
+    CONSTRAINT uq_ciudad_pais UNIQUE (nombre, pais_id),
+
+    CONSTRAINT uq_ciudades_abreviacion UNIQUE (abreviacion)
 );
 
 CREATE TABLE novedades (
@@ -117,12 +120,14 @@ CREATE TABLE promociones (
 
 CREATE TABLE vuelos (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    codigoVuelo VARCHAR(10) NOT NULL,
     aerolinea_id INT NOT NULL,
     origen_ciudad_id INT NOT NULL,
     destino_ciudad_id INT NOT NULL,
 
     precio DECIMAL(10,2) NOT NULL,
     asientos_disponibles INT NOT NULL,
+    asientosOcupados INT NOT NULL DEFAULT 0,
 
     fecha_salida DATETIME NOT NULL,
     fecha_llegada DATETIME NOT NULL,
@@ -132,6 +137,8 @@ CREATE TABLE vuelos (
     duracion_horas DECIMAL(5,2) NOT NULL,
 
     estado_id INT NOT NULL,
+
+    CONSTRAINT uq_vuelos_codigoVuelo UNIQUE (codigoVuelo),
 
     CONSTRAINT fk_vuelos_aerolinea
         FOREIGN KEY (aerolinea_id) REFERENCES aerolineas(id),
@@ -164,4 +171,40 @@ CREATE TABLE reservas (
 
     CONSTRAINT fk_reservas_estado
         FOREIGN KEY (estado_id) REFERENCES estados_reservas(id)
+);
+
+CREATE TABLE pasajeros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    reserva_id INT NOT NULL,
+
+    nombre VARCHAR(80) NOT NULL,
+    apellido VARCHAR(80) NOT NULL,
+    documento VARCHAR(30) NOT NULL,
+    pasaporte VARCHAR(30) NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    telefono_contacto VARCHAR(30) NOT NULL,
+    correo_electronico VARCHAR(120) NOT NULL,
+
+    CONSTRAINT fk_pasajeros_reserva
+        FOREIGN KEY (reserva_id) REFERENCES reservas(id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE metodos_pago (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    reserva_id INT NOT NULL,
+
+    nombre_titular VARCHAR(120) NOT NULL,
+    ultimos_cuatro_digitos CHAR(4) NOT NULL,
+    vencimiento_mes TINYINT NOT NULL,
+    vencimiento_anio SMALLINT NOT NULL,
+
+    fecha_pago DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT uq_metodos_pago_reserva
+        UNIQUE (reserva_id),
+
+    CONSTRAINT fk_metodos_pago_reserva
+        FOREIGN KEY (reserva_id) REFERENCES reservas(id)
+        ON DELETE CASCADE
 );
